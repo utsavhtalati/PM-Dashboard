@@ -4,6 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ project['name'] }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #0078d4;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0078d4;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-actions {
+            display: flex;
+        }
+
+        a {
+            color: #0078d4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005a9e;
+        }
+
+        .go-back {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <h1>{{ project['name'] }}</h1>
@@ -13,10 +100,12 @@
         {% for task in project['tasks'] %}
             <li>
                 {{ task['description'] }}
-                {% if not task['complete'] %}
-                    <a href="{{ url_for('complete_task', project_id=project['id'], task_id=task['id']) }}">Complete</a>
-                {% endif %}
-                <a href="{{ url_for('delete_task', project_id=project['id'], task_id=task['id']) }}">Delete</a>
+                <div class="task-actions">
+                    {% if not task['complete'] %}
+                        <a href="{{ url_for('complete_task', project_id=project['id'], task_id=task['id']) }}">Complete</a>
+                    {% endif %}
+                    <a href="{{ url_for('delete_task', project_id=project['id'], task_id=task['id']) }}">Delete</a>
+                </div>
             </li>
         {% endfor %}
     </ul>
@@ -27,8 +116,6 @@
         <button type="submit">Add</button>
     </form>
 
-    <br>
-
-    <a href="{{ url_for('index') }}">Go Back to Main Page</a>
+    <a class="go-back" href="{{ url_for('index') }}">Go Back to Main Page</a>
 </body>
 </html>
