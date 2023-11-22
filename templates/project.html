@@ -11,7 +11,13 @@
     <h2>Tasks</h2>
     <ul>
         {% for task in project['tasks'] %}
-            <li>{{ task }}</li>
+            <li>
+                {{ task['description'] }}
+                {% if not task['complete'] %}
+                    <a href="{{ url_for('complete_task', project_id=project['id'], task_id=task['id']) }}">Complete</a>
+                {% endif %}
+                <a href="{{ url_for('delete_task', project_id=project['id'], task_id=task['id']) }}">Delete</a>
+            </li>
         {% endfor %}
     </ul>
 
@@ -20,5 +26,9 @@
         <input type="text" id="task_description" name="task_description" required>
         <button type="submit">Add</button>
     </form>
+
+    <br>
+
+    <a href="{{ url_for('index') }}">Go Back to Main Page</a>
 </body>
 </html>
